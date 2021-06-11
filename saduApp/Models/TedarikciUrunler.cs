@@ -18,8 +18,5 @@ namespace saduApp.Models
         public string tedarikciIUyed { get; set; }
         public string tedarikUrunId { get; set; }
         public bool Aktiflik { get; set; }
-    
-        public virtual Urunler Urunler { get; set; }
-        public virtual Uye Uye { get; set; }
     }
 }

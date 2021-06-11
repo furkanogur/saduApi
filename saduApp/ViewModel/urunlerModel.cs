@@ -12,5 +12,7 @@ namespace saduApp.ViewModel
         public string Aciklama { get; set; }
         public bool Aktiflik { get; set; }
         public decimal Fiyat { get; set; }
+        public string UyeId { get; set; }
+        public int UrunUyeSayisi { get; set; }
     }
 }

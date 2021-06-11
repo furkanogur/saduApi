@@ -19,7 +19,6 @@ namespace saduApp.Models
         {
             this.KategoriUrun = new HashSet<KategoriUrun>();
             this.Siparisler = new HashSet<Siparisler>();
-            this.TedarikciUrunler = new HashSet<TedarikciUrunler>();
         }
     
         public string urunId { get; set; }
@@ -27,12 +26,12 @@ namespace saduApp.Models
         public string Aciklama { get; set; }
         public bool Aktiflik { get; set; }
         public decimal Fiyat { get; set; }
+        public string UyeId { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<KategoriUrun> KategoriUrun { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Siparisler> Siparisler { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TedarikciUrunler> TedarikciUrunler { get; set; }
+        public virtual Uye Uye { get; set; }
     }
 }

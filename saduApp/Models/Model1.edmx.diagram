@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="b10383b90a254051a06432da4d8b4d64" Name="Diagram1">
+        <EntityTypeShape EntityType="SaduDbModel.Iletisim" Width="1.5" PointX="3" PointY="3.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="SaduDbModel.Kargo" Width="1.5" PointX="3" PointY="7.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="SaduDbModel.Kategoriler" Width="1.5" PointX="3" PointY="20.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="SaduDbModel.KategoriUrun" Width="1.5" PointX="5.25" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SaduDbModel.OdemeTuru" Width="1.5" PointX="3" PointY="15" IsExpanded="true" />
+        <EntityTypeShape EntityType="SaduDbModel.SiparisDurumu" Width="1.5" PointX="3" PointY="17.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="SaduDbModel.Siparisler" Width="1.5" PointX="5.25" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SaduDbModel.sysdiagrams" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SaduDbModel.TedarikciUrunler" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SaduDbModel.Urunler" Width="1.5" PointX="3" PointY="11.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="SaduDbModel.Uye" Width="1.5" PointX="0.75" PointY="5.375" IsExpanded="true" />
+        <AssociationConnector Association="SaduDbModel.FK_İletisim_Uye" ManuallyRouted="false" />
+        <AssociationConnector Association="SaduDbModel.FK_Siparisler_Kargo" ManuallyRouted="false" />
+        <AssociationConnector Association="SaduDbModel.FK_Kategoriler_Kategoriler" ManuallyRouted="false" />
+        <AssociationConnector Association="SaduDbModel.FK_KategoriUrun_Kategoriler" ManuallyRouted="false" />
+        <AssociationConnector Association="SaduDbModel.FK_KategoriUrun_Urunler" ManuallyRouted="false" />
+        <AssociationConnector Association="SaduDbModel.FK_Siparisler_OdemeTuru" ManuallyRouted="false" />
+        <AssociationConnector Association="SaduDbModel.FK_Siparisler_SiparisDurumu" ManuallyRouted="false" />
+        <AssociationConnector Association="SaduDbModel.FK_Siparisler_Urunler" ManuallyRouted="false" />
+        <AssociationConnector Association="SaduDbModel.FK_Siparisler_Uye" ManuallyRouted="false" />
+        <AssociationConnector Association="SaduDbModel.FK_Urunler_Uye" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

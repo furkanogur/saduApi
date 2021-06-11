@@ -99,6 +99,7 @@
           <Property Name="Aciklama" Type="nvarchar(max)" />
           <Property Name="Aktiflik" Type="bit" Nullable="false" />
           <Property Name="Fiyat" Type="money" Nullable="false" />
+          <Property Name="UyeId" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="Uye">
           <Key>
@@ -218,27 +219,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_TedarikciUrunler_Urunler">
-          <End Role="Urunler" Type="Self.Urunler" Multiplicity="1" />
-          <End Role="TedarikciUrunler" Type="Self.TedarikciUrunler" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Urunler">
-              <PropertyRef Name="urunId" />
-            </Principal>
-            <Dependent Role="TedarikciUrunler">
-              <PropertyRef Name="tedarikUrunId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_TedarikciUrunler_Uye">
+        <Association Name="FK_Urunler_Uye">
           <End Role="Uye" Type="Self.Uye" Multiplicity="1" />
-          <End Role="TedarikciUrunler" Type="Self.TedarikciUrunler" Multiplicity="*" />
+          <End Role="Urunler" Type="Self.Urunler" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Uye">
               <PropertyRef Name="uyeId" />
             </Principal>
-            <Dependent Role="TedarikciUrunler">
-              <PropertyRef Name="tedarikciIUyed" />
+            <Dependent Role="Urunler">
+              <PropertyRef Name="UyeId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -290,13 +279,9 @@
             <End Role="Uye" EntitySet="Uye" />
             <End Role="Siparisler" EntitySet="Siparisler" />
           </AssociationSet>
-          <AssociationSet Name="FK_TedarikciUrunler_Urunler" Association="Self.FK_TedarikciUrunler_Urunler">
-            <End Role="Urunler" EntitySet="Urunler" />
-            <End Role="TedarikciUrunler" EntitySet="TedarikciUrunler" />
-          </AssociationSet>
-          <AssociationSet Name="FK_TedarikciUrunler_Uye" Association="Self.FK_TedarikciUrunler_Uye">
+          <AssociationSet Name="FK_Urunler_Uye" Association="Self.FK_Urunler_Uye">
             <End Role="Uye" EntitySet="Uye" />
-            <End Role="TedarikciUrunler" EntitySet="TedarikciUrunler" />
+            <End Role="Urunler" EntitySet="Urunler" />
           </AssociationSet>
         </EntityContainer>
       </Schema>
@@ -402,8 +387,6 @@
           <Property Name="tedarikciIUyed" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="tedarikUrunId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Aktiflik" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Urunler" Relationship="Self.FK_TedarikciUrunler_Urunler" FromRole="TedarikciUrunler" ToRole="Urunler" />
-          <NavigationProperty Name="Uye" Relationship="Self.FK_TedarikciUrunler_Uye" FromRole="TedarikciUrunler" ToRole="Uye" />
         </EntityType>
         <EntityType Name="Urunler">
           <Key>
@@ -414,9 +397,10 @@
           <Property Name="Aciklama" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Aktiflik" Type="Boolean" Nullable="false" />
           <Property Name="Fiyat" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="UyeId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="KategoriUrun" Relationship="Self.FK_KategoriUrun_Urunler" FromRole="Urunler" ToRole="KategoriUrun" />
           <NavigationProperty Name="Siparisler" Relationship="Self.FK_Siparisler_Urunler" FromRole="Urunler" ToRole="Siparisler" />
-          <NavigationProperty Name="TedarikciUrunler" Relationship="Self.FK_TedarikciUrunler_Urunler" FromRole="Urunler" ToRole="TedarikciUrunler" />
+          <NavigationProperty Name="Uye" Relationship="Self.FK_Urunler_Uye" FromRole="Urunler" ToRole="Uye" />
         </EntityType>
         <EntityType Name="Uye">
           <Key>
@@ -429,7 +413,7 @@
           <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Iletisim" Relationship="Self.FK_İletisim_Uye" FromRole="Uye" ToRole="Iletisim" />
           <NavigationProperty Name="Siparisler" Relationship="Self.FK_Siparisler_Uye" FromRole="Uye" ToRole="Siparisler" />
-          <NavigationProperty Name="TedarikciUrunler" Relationship="Self.FK_TedarikciUrunler_Uye" FromRole="Uye" ToRole="TedarikciUrunler" />
+          <NavigationProperty Name="Urunler" Relationship="Self.FK_Urunler_Uye" FromRole="Uye" ToRole="Urunler" />
         </EntityType>
         <Association Name="FK_İletisim_Uye">
           <End Role="Uye" Type="Self.Uye" Multiplicity="1" />
@@ -539,31 +523,19 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_TedarikciUrunler_Urunler">
-          <End Role="Urunler" Type="Self.Urunler" Multiplicity="1" />
-          <End Role="TedarikciUrunler" Type="Self.TedarikciUrunler" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Urunler">
-              <PropertyRef Name="urunId" />
-            </Principal>
-            <Dependent Role="TedarikciUrunler">
-              <PropertyRef Name="tedarikUrunId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_TedarikciUrunler_Uye">
+        <Association Name="FK_Urunler_Uye">
           <End Role="Uye" Type="Self.Uye" Multiplicity="1" />
-          <End Role="TedarikciUrunler" Type="Self.TedarikciUrunler" Multiplicity="*" />
+          <End Role="Urunler" Type="Self.Urunler" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Uye">
               <PropertyRef Name="uyeId" />
             </Principal>
-            <Dependent Role="TedarikciUrunler">
-              <PropertyRef Name="tedarikciIUyed" />
+            <Dependent Role="Urunler">
+              <PropertyRef Name="UyeId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="SaduDbEntities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="SaduDbEntities2" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Iletisim" EntityType="Self.Iletisim" />
           <EntitySet Name="Kargo" EntityType="Self.Kargo" />
           <EntitySet Name="Kategoriler" EntityType="Self.Kategoriler" />
@@ -611,13 +583,9 @@
             <End Role="Uye" EntitySet="Uye" />
             <End Role="Siparisler" EntitySet="Siparisler" />
           </AssociationSet>
-          <AssociationSet Name="FK_TedarikciUrunler_Urunler" Association="Self.FK_TedarikciUrunler_Urunler">
-            <End Role="Urunler" EntitySet="Urunler" />
-            <End Role="TedarikciUrunler" EntitySet="TedarikciUrunler" />
-          </AssociationSet>
-          <AssociationSet Name="FK_TedarikciUrunler_Uye" Association="Self.FK_TedarikciUrunler_Uye">
+          <AssociationSet Name="FK_Urunler_Uye" Association="Self.FK_Urunler_Uye">
             <End Role="Uye" EntitySet="Uye" />
-            <End Role="TedarikciUrunler" EntitySet="TedarikciUrunler" />
+            <End Role="Urunler" EntitySet="Urunler" />
           </AssociationSet>
         </EntityContainer>
       </Schema>
@@ -625,7 +593,7 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="SaduDbModelStoreContainer" CdmEntityContainer="SaduDbEntities">
+        <EntityContainerMapping StorageEntityContainer="SaduDbModelStoreContainer" CdmEntityContainer="SaduDbEntities2">
           <EntitySetMapping Name="Iletisim">
             <EntityTypeMapping TypeName="SaduDbModel.Iletisim">
               <MappingFragment StoreEntitySet="Iletisim">
@@ -728,6 +696,7 @@
                 <ScalarProperty Name="Aciklama" ColumnName="Aciklama" />
                 <ScalarProperty Name="Aktiflik" ColumnName="Aktiflik" />
                 <ScalarProperty Name="Fiyat" ColumnName="Fiyat" />
+                <ScalarProperty Name="UyeId" ColumnName="UyeId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

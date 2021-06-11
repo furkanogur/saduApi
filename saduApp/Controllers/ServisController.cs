@@ -11,7 +11,7 @@ namespace saduApp.Controllers
 {
     public class ServisController : ApiController
     {
-        SaduDbEntities db = new SaduDbEntities();
+        SaduDbEntities2 db = new SaduDbEntities2();
         sonucModel sonuc = new sonucModel();
 
 
@@ -29,7 +29,9 @@ namespace saduApp.Controllers
                 KullaniciAdi = x.KullaniciAdi,
                 Sifre = x.Sifre,
                 Email = x.Email,
-                admin = x.admin
+                admin = x.admin,
+       
+
             }).ToList();
             return liste;
         }
@@ -48,8 +50,8 @@ namespace saduApp.Controllers
                 KullaniciAdi = x.KullaniciAdi,
                 Sifre = x.Sifre,
                 Email = x.Email,
-                admin = x.admin
-
+                admin = x.admin,
+         
             }).SingleOrDefault();
 
             return kayit;
@@ -62,7 +64,7 @@ namespace saduApp.Controllers
         public sonucModel UyeEkle(uyeModel model)
         {
 
-            if (db.Uye.Count(s =>s.Email == model.Email) > 0)
+            if (db.Uye.Count(s =>s.Email == model.Email) >= 1)
             {
                 sonuc.islem = false;
                 sonuc.mesaj = "Bu Üye Zaten Kayıtlıdır!";
@@ -101,6 +103,7 @@ namespace saduApp.Controllers
 
             kayit.KullaniciAdi = model.KullaniciAdi;
             kayit.Sifre = model.Sifre;
+            kayit.admin = model.admin;
 
             db.SaveChanges();
             sonuc.islem = true;
@@ -124,7 +127,7 @@ namespace saduApp.Controllers
                 return sonuc;
             }
 
-            if (db.Iletisim.Count(s => s.UyeId == uyeId) > 0)
+            if (db.Iletisim.Count(s => s.UyeId == uyeId) >= 1)
             {
                 sonuc.islem = false;
                 sonuc.mesaj = "İletişim Bilgisi Olan Üye Silinemez!";
@@ -186,10 +189,10 @@ namespace saduApp.Controllers
         //İletisim Ekle
         [HttpPost]
         [Route("api/iletisimekle")]
-        public sonucModel İletisimEkle(iletisimModel model)
+        public sonucModel IletisimEkle(iletisimModel model)
         {
 
-            if (db.Iletisim.Count(s =>s.UyeId == model.UyeId) > 0)
+            if (db.Iletisim.Count(s =>s.UyeId == model.UyeId) >= 1)
             {
                 sonuc.islem = false;
                 sonuc.mesaj = "Bu İletişim Bilgisi Zaten Kayıtlıdır!";
@@ -268,124 +271,119 @@ namespace saduApp.Controllers
         //TedarikciuyeListele
 
         [HttpGet]
-        [Route("api/tedariuyeliste/{uyeTedId}")]
-        public List<tedarikciUrunlerModel> TedarikUrunListe(string uyeTedId)
+        [Route("api/tedarikuyeliste/{uyeTedId}")]
+        public List<urunlerModel> TedarikUrunListe(string uyeTedId)
         {
-            List<tedarikciUrunlerModel> liste = db.TedarikciUrunler.Where(s => s.tedarikciIUyed == uyeTedId).Select(x => new tedarikciUrunlerModel()
+            List<urunlerModel> liste = db.Urunler.Where(s => s.UyeId == uyeTedId).Select(x => new urunlerModel()
             {
-                tedarikId = x.tedarikId,
-                tedarikciIUyed = x.tedarikciIUyed,
-                tedarikUrunId = x.tedarikUrunId,
-                Aktiflik = x.Aktiflik
-                
+                urunId = x.urunId,
+                Adi = x.Adi,
+                Aciklama = x.Aciklama,
+                Aktiflik = x.Aktiflik,
+                UyeId = x.UyeId,
+                Fiyat = x.Fiyat
+
             }).ToList();
-
-            foreach (var kayit in liste)
-            {
-                kayit.uyeBilgi = UyeById(kayit.tedarikciIUyed);
-                kayit.urunBilgi = UrunById(kayit.tedarikUrunId);
-
-            }
 
             return liste;
         }
 
-        //TedarikciUrunListele
+        ////TedarikciUrunListele
 
-        [HttpGet]
-        [Route("api/tedarikurunliste/{urunTedId}")]
-        public List<tedarikciUrunlerModel> UrunTedarikListe(string urunTedId)
-        {
-            List<tedarikciUrunlerModel> liste = db.TedarikciUrunler.Where(s => s.tedarikUrunId == urunTedId).Select(x => new tedarikciUrunlerModel()
-            {
-                tedarikId = x.tedarikId,
-                tedarikciIUyed = x.tedarikciIUyed,
-                tedarikUrunId = x.tedarikUrunId,
-                Aktiflik = x.Aktiflik
-            }).ToList();
+        //[HttpGet]
+        //[Route("api/tedarikurunliste/{urunTedId}")]
+        //public List<tedarikciUrunlerModel> UrunTedarikListe(string urunTedId)
+        //{
+        //    List<tedarikciUrunlerModel> liste = db.TedarikciUrunler.Where(s => s.tedarikUrunId == urunTedId).Select(x => new tedarikciUrunlerModel()
+        //    {
+        //        tedarikId = x.tedarikId,
+        //        tedarikciIUyed = x.tedarikciIUyed,
+        //        tedarikUrunId = x.tedarikUrunId,
+        //        Aktiflik = x.Aktiflik
+        //    }).ToList();
 
-            foreach (var kayit in liste)
-            {
-                kayit.uyeBilgi = UyeById(kayit.tedarikciIUyed);
-                kayit.urunBilgi = UrunById(kayit.tedarikUrunId);
+        //    foreach (var kayit in liste)
+        //    {
+        //        kayit.uyeBilgi = UyeById(kayit.tedarikciIUyed);
+        //        kayit.urunBilgi = UrunById(kayit.tedarikUrunId);
 
-            }
+        //    }
 
-            return liste;
-        }
+        //    return liste;
+        //}
 
-        //Tedarikci EKle
-        [HttpPost]
-        [Route("api/tedarikciekle")]
-        public sonucModel TedarikciEkle(tedarikciUrunlerModel model)
-        {
+        ////Tedarikci EKle
+        //[HttpPost]
+        //[Route("api/tedarikciekle")]
+        //public sonucModel TedarikciEkle(tedarikciUrunlerModel model)
+        //{
 
-            if (db.TedarikciUrunler.Count(s => s.tedarikciIUyed == model.tedarikciIUyed && s.tedarikUrunId == model.tedarikUrunId) > 0)
-            {
-                sonuc.islem = false;
-                sonuc.mesaj = "Bu Tedarikci Ürünü Zaten Kayıtlıdır!";
-                return sonuc;
-            }
+        //    if (db.TedarikciUrunler.Count(s => s.tedarikciIUyed == model.tedarikciIUyed && s.tedarikUrunId == model.tedarikUrunId) > 0)
+        //    {
+        //        sonuc.islem = false;
+        //        sonuc.mesaj = "Bu Tedarikci Ürünü Zaten Kayıtlıdır!";
+        //        return sonuc;
+        //    }
 
-            TedarikciUrunler yeni = new TedarikciUrunler();
-            yeni.tedarikId = Guid.NewGuid().ToString();
-            yeni.tedarikciIUyed = model.tedarikciIUyed;
-            yeni.tedarikUrunId = model.tedarikUrunId;
-            yeni.Aktiflik = true;
-         
-            db.TedarikciUrunler.Add(yeni);
-            db.SaveChanges();
-            sonuc.islem = true;
-            sonuc.mesaj = "Tedarikci Ürünü Eklendi";
+        //    TedarikciUrunler yeni = new TedarikciUrunler();
+        //    yeni.tedarikId = Guid.NewGuid().ToString();
+        //    yeni.tedarikciIUyed = model.tedarikciIUyed;
+        //    yeni.tedarikUrunId = model.tedarikUrunId;
+        //    yeni.Aktiflik = true;
 
-            return sonuc;
-        }
-        //Tedarikci Duzenle
+        //    db.TedarikciUrunler.Add(yeni);
+        //    db.SaveChanges();
+        //    sonuc.islem = true;
+        //    sonuc.mesaj = "Tedarikci Ürünü Eklendi";
 
-        [HttpPut]
-        [Route("api/tedarikurunduzenle")]
+        //    return sonuc;
+        //}
+        ////Tedarikci Duzenle
 
-        public sonucModel TedarikUrunDuzenle(tedarikciUrunlerModel model)
-        {
-            TedarikciUrunler kayit = db.TedarikciUrunler.Where(s => s.tedarikId == model.tedarikId).SingleOrDefault();
+        //[HttpPut]
+        //[Route("api/tedarikurunduzenle")]
 
-            if (kayit == null)
-            {
-                sonuc.islem = false;
-                sonuc.mesaj = "Tedarikci Ürün Bulunamadı";
-                return sonuc;
-            }
+        //public sonucModel TedarikUrunDuzenle(tedarikciUrunlerModel model)
+        //{
+        //    TedarikciUrunler kayit = db.TedarikciUrunler.Where(s => s.tedarikId == model.tedarikId).SingleOrDefault();
 
-            kayit.Aktiflik = model.Aktiflik;
-      
-            db.SaveChanges();
-            sonuc.islem = true;
-            sonuc.mesaj = "Tedarik Ürun Bilgileri Düzenlendi";
+        //    if (kayit == null)
+        //    {
+        //        sonuc.islem = false;
+        //        sonuc.mesaj = "Tedarikci Ürün Bulunamadı";
+        //        return sonuc;
+        //    }
 
-            return sonuc;
-        }
-        //Tedarikci Sil
+        //    kayit.Aktiflik = model.Aktiflik;
 
-        [HttpDelete]
-        [Route("api/tedarikurunsil/{tuId}")]
-        public sonucModel TedarikUrunSil(string tuId)
-        {
+        //    db.SaveChanges();
+        //    sonuc.islem = true;
+        //    sonuc.mesaj = "Tedarik Ürun Bilgileri Düzenlendi";
 
-            TedarikciUrunler kayit = db.TedarikciUrunler.Where(s => s.tedarikId == tuId).SingleOrDefault();
+        //    return sonuc;
+        //}
+        ////Tedarikci Sil
 
-            if (kayit == null)
-            {
-                sonuc.islem = false;
-                sonuc.mesaj = "Kayıt Bulunamadı";
-                return sonuc;
-            }
+        //[HttpDelete]
+        //[Route("api/tedarikurunsil/{tuId}")]
+        //public sonucModel TedarikUrunSil(string tuId)
+        //{
 
-            db.TedarikciUrunler.Remove(kayit);
-            db.SaveChanges();
-            sonuc.mesaj = "Tedarik Ürün Silindi";
-            sonuc.islem = true;
-            return sonuc;
-        }
+        //    TedarikciUrunler kayit = db.TedarikciUrunler.Where(s => s.tedarikId == tuId).SingleOrDefault();
+
+        //    if (kayit == null)
+        //    {
+        //        sonuc.islem = false;
+        //        sonuc.mesaj = "Kayıt Bulunamadı";
+        //        return sonuc;
+        //    }
+
+        //    db.TedarikciUrunler.Remove(kayit);
+        //    db.SaveChanges();
+        //    sonuc.mesaj = "Tedarik Ürün Silindi";
+        //    sonuc.islem = true;
+        //    return sonuc;
+        //}
 
         #endregion
 
@@ -403,7 +401,9 @@ namespace saduApp.Controllers
                 Aciklama = x.Aciklama,
                 Aktiflik = x.Aktiflik,
                 Fiyat = x.Fiyat,
-                urunId = x.urunId
+                urunId = x.urunId,
+                UyeId=x.UyeId
+                
             }).ToList();
             return liste;
         }
@@ -420,11 +420,14 @@ namespace saduApp.Controllers
                 Adi = x.Adi,
                 Aciklama = x.Aciklama,
                 Fiyat = x.Fiyat,
-                Aktiflik = x.Aktiflik
+                Aktiflik = x.Aktiflik,
+                UyeId = x.UyeId
+
             }).SingleOrDefault();
 
             return kayit;
         }
+
 
         //Urun Ekle
 
@@ -439,7 +442,9 @@ namespace saduApp.Controllers
             yeni.Aciklama = model.Aciklama;
             yeni.Fiyat = model.Fiyat;
             yeni.Aktiflik = true;
-            
+            yeni.UyeId = model.UyeId;
+
+
             db.Urunler.Add(yeni);
             db.SaveChanges();
             sonuc.islem = true;
@@ -469,7 +474,7 @@ namespace saduApp.Controllers
 
             db.SaveChanges();
             sonuc.islem = true;
-            sonuc.mesaj = "Ürun Düzenlendi";
+            sonuc.mesaj = "Ürün Düzenlendi";
 
             return sonuc;
         }
@@ -491,7 +496,7 @@ namespace saduApp.Controllers
             if (db.TedarikciUrunler.Count(s => s.tedarikUrunId == urunId) > 0)
             {
                 sonuc.islem = false;
-                sonuc.mesaj = "Tedarik Üründen Sil";
+                sonuc.mesaj = "Ürünü Tedarikten Ve Kategorideki Ürünlerden Sil";
                 return sonuc;
 
             }
@@ -499,7 +504,7 @@ namespace saduApp.Controllers
             db.Urunler.Remove(kayit);
             db.SaveChanges();
             sonuc.islem = true;
-            sonuc.mesaj = "Urun Silindi";
+            sonuc.mesaj = "Ürün Silindi";
             return sonuc;
         }
 
