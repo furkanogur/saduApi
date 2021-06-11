@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -11,7 +13,7 @@ namespace saduApp.Controllers
 {
     public class ServisController : ApiController
     {
-        SaduDbEntities2 db = new SaduDbEntities2();
+        SaduDbEntities db = new SaduDbEntities();
         sonucModel sonuc = new sonucModel();
 
 
@@ -21,7 +23,7 @@ namespace saduApp.Controllers
 
         [HttpGet]
         [Route("api/uyeliste")]
-        public List<uyeModel> OgrenciListe()
+        public List<uyeModel> UyeListe()
         {
             List<uyeModel> liste = db.Uye.Select(x => new uyeModel()
             {
@@ -30,6 +32,7 @@ namespace saduApp.Controllers
                 Sifre = x.Sifre,
                 Email = x.Email,
                 admin = x.admin,
+                UyeFoto = x.UyeFoto,
        
 
             }).ToList();
@@ -51,7 +54,8 @@ namespace saduApp.Controllers
                 Sifre = x.Sifre,
                 Email = x.Email,
                 admin = x.admin,
-         
+                UyeFoto = x.UyeFoto,
+
             }).SingleOrDefault();
 
             return kayit;
@@ -77,6 +81,7 @@ namespace saduApp.Controllers
             yeni.Sifre = model.Sifre;
             yeni.Email = model.Email;
             yeni.admin = model.admin;
+            yeni.UyeFoto = model.UyeFoto;
             db.Uye.Add(yeni);
             db.SaveChanges();
             sonuc.islem = true;
@@ -104,7 +109,7 @@ namespace saduApp.Controllers
             kayit.KullaniciAdi = model.KullaniciAdi;
             kayit.Sifre = model.Sifre;
             kayit.admin = model.admin;
-
+            kayit.UyeFoto = model.UyeFoto;
             db.SaveChanges();
             sonuc.islem = true;
             sonuc.mesaj = "Üye Düzenlendi";
@@ -115,7 +120,7 @@ namespace saduApp.Controllers
         //Uye Sil
         [HttpDelete]
         [Route("api/uyesil/{uyeId}")]
-        public sonucModel OgrenciSil(string uyeId)
+        public sonucModel UyeSil(string uyeId)
         {
 
             Uye kayit = db.Uye.Where(s => s.uyeId == uyeId).SingleOrDefault();
@@ -134,6 +139,13 @@ namespace saduApp.Controllers
                 return sonuc;
             }
 
+            if (db.Urunler.Count(s => s.UyeId == uyeId) >= 1)
+            {
+                sonuc.islem = false;
+                sonuc.mesaj = "Ürünü Olan Üye Silinemez!";
+                return sonuc;
+            }
+
             db.Uye.Remove(kayit);
             db.SaveChanges();
             sonuc.islem = true;
@@ -141,6 +153,51 @@ namespace saduApp.Controllers
 
             return sonuc;
         }
+
+        [HttpPost]
+        [Route("api/uyefotoguncelle")]
+        public sonucModel UyeFotoGuncelle(UyeFotoModel model)
+        {
+            Uye uye = db.Uye.Where(s => s.uyeId == model.uyeId).SingleOrDefault();
+
+
+            if (uye ==null)
+            {
+                sonuc.islem = false;
+                sonuc.mesaj = "Kayıt Bulunamadı!";
+                return sonuc;
+            }
+
+            if (uye.UyeFoto != "profil.jpg")
+            {
+                string yol = System.Web.Hosting.HostingEnvironment.MapPath("~/Dosyalar/" + uye.UyeFoto);
+                if (File.Exists(yol))
+                {
+                    File.Delete(yol);
+                }
+            }
+
+            string data = model.fotoData;
+            string base64 = data.Substring(data.IndexOf(',') + 1);
+            base64 = base64.Trim('\0');
+            byte[] imgbytes = Convert.FromBase64String(base64);
+            string dosyaAdi = uye.uyeId + model.fotoUzanti.Replace("image/",".");
+            using (var ms = new MemoryStream(imgbytes,0,imgbytes.Length))
+            {
+                Image img = Image.FromStream(ms,true);
+                img.Save(System.Web.Hosting.HostingEnvironment.MapPath("~/Dosyalar/" + dosyaAdi));
+
+            }
+            uye.UyeFoto = dosyaAdi;
+            db.SaveChanges();
+
+            sonuc.islem = true;
+            sonuc.mesaj = "Fotoğraf Güncellendi";
+          
+
+                return sonuc;
+        }
+
         #endregion
 
         #region İletisim
@@ -281,7 +338,9 @@ namespace saduApp.Controllers
                 Aciklama = x.Aciklama,
                 Aktiflik = x.Aktiflik,
                 UyeId = x.UyeId,
-                Fiyat = x.Fiyat
+                Fiyat = x.Fiyat,
+                UrunFoto =x.UrunFoto
+                
 
             }).ToList();
 
@@ -402,7 +461,8 @@ namespace saduApp.Controllers
                 Aktiflik = x.Aktiflik,
                 Fiyat = x.Fiyat,
                 urunId = x.urunId,
-                UyeId=x.UyeId
+                UyeId=x.UyeId,
+                UrunFoto=x.UrunFoto,
                 
             }).ToList();
             return liste;
@@ -421,8 +481,8 @@ namespace saduApp.Controllers
                 Aciklama = x.Aciklama,
                 Fiyat = x.Fiyat,
                 Aktiflik = x.Aktiflik,
-                UyeId = x.UyeId
-
+                UyeId = x.UyeId,
+                UrunFoto = x.UrunFoto,
             }).SingleOrDefault();
 
             return kayit;
@@ -443,6 +503,7 @@ namespace saduApp.Controllers
             yeni.Fiyat = model.Fiyat;
             yeni.Aktiflik = true;
             yeni.UyeId = model.UyeId;
+            yeni.UrunFoto = model.UrunFoto;
 
 
             db.Urunler.Add(yeni);
@@ -471,6 +532,7 @@ namespace saduApp.Controllers
             kayit.Aciklama = model.Aciklama;
             kayit.Fiyat = model.Fiyat;
             kayit.Aktiflik = model.Aktiflik;
+            kayit.UrunFoto = model.UrunFoto; 
 
             db.SaveChanges();
             sonuc.islem = true;
@@ -505,6 +567,51 @@ namespace saduApp.Controllers
             db.SaveChanges();
             sonuc.islem = true;
             sonuc.mesaj = "Ürün Silindi";
+            return sonuc;
+        }
+
+        //urunFoto
+        [HttpPost]
+        [Route("api/urunfotoguncelle")]
+        public sonucModel UrunFotoGuncelle(UrunFotoModel model)
+        {
+            Urunler urun = db.Urunler.Where(s => s.urunId == model.urunId).SingleOrDefault();
+
+
+            if (urun == null)
+            {
+                sonuc.islem = false;
+                sonuc.mesaj = "Kayıt Bulunamadı!";
+                return sonuc;
+            }
+
+            if (urun.UrunFoto != "urun.jpg")
+            {
+                string yol = System.Web.Hosting.HostingEnvironment.MapPath("~/Dosyalar/" + urun.UrunFoto);
+                if (File.Exists(yol))
+                {
+                    File.Delete(yol);
+                }
+            }
+
+            string data = model.fotoData;
+            string base64 = data.Substring(data.IndexOf(',') + 1);
+            base64 = base64.Trim('\0');
+            byte[] imgbytes = Convert.FromBase64String(base64);
+            string dosyaAdi = urun.urunId + model.fotoUzanti.Replace("image/", ".");
+            using (var ms = new MemoryStream(imgbytes, 0, imgbytes.Length))
+            {
+                Image img = Image.FromStream(ms, true);
+                img.Save(System.Web.Hosting.HostingEnvironment.MapPath("~/Dosyalar/" + dosyaAdi));
+
+            }
+            urun.UrunFoto = dosyaAdi;
+            db.SaveChanges();
+
+            sonuc.islem = true;
+            sonuc.mesaj = "Fotoğraf Güncellendi";
+
+
             return sonuc;
         }
 

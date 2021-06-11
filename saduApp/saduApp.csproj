@@ -190,7 +190,9 @@
     <Compile Include="ViewModel\siparislerModel.cs" />
     <Compile Include="ViewModel\sonucModel.cs" />
     <Compile Include="ViewModel\tedarikciUrunlerModel.cs" />
+    <Compile Include="ViewModel\UrunFotoModel.cs" />
     <Compile Include="ViewModel\urunlerModel.cs" />
+    <Compile Include="ViewModel\UyeFotoModel.cs" />
     <Compile Include="ViewModel\uyeModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -211,6 +213,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Dosyalar\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

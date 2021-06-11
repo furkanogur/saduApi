@@ -13,5 +13,6 @@ namespace saduApp.ViewModel
         public bool admin { get; set; }
         public string Email { get; set; }
         public int UyeUrunSayisi { get; set; }
+        public string UyeFoto { get; set; }
     }
 }

@@ -4,14 +4,14 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="b10383b90a254051a06432da4d8b4d64" Name="Diagram1">
+      <Diagram DiagramId="558ac2ac97f640d68688418346235199" Name="Diagram1">
         <EntityTypeShape EntityType="SaduDbModel.Iletisim" Width="1.5" PointX="3" PointY="3.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="SaduDbModel.Kargo" Width="1.5" PointX="3" PointY="7.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="SaduDbModel.Kategoriler" Width="1.5" PointX="3" PointY="20.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="SaduDbModel.KategoriUrun" Width="1.5" PointX="5.25" PointY="12.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="SaduDbModel.OdemeTuru" Width="1.5" PointX="3" PointY="15" IsExpanded="true" />
-        <EntityTypeShape EntityType="SaduDbModel.SiparisDurumu" Width="1.5" PointX="3" PointY="17.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="SaduDbModel.Siparisler" Width="1.5" PointX="5.25" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SaduDbModel.Kargo" Width="1.5" PointX="3" PointY="7.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="SaduDbModel.Kategoriler" Width="1.5" PointX="3" PointY="20.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SaduDbModel.KategoriUrun" Width="1.5" PointX="5.25" PointY="12.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="SaduDbModel.OdemeTuru" Width="1.5" PointX="3" PointY="15.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="SaduDbModel.SiparisDurumu" Width="1.5" PointX="3" PointY="17.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="SaduDbModel.Siparisler" Width="1.5" PointX="5.25" PointY="7.875" IsExpanded="true" />
         <EntityTypeShape EntityType="SaduDbModel.sysdiagrams" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="SaduDbModel.TedarikciUrunler" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="SaduDbModel.Urunler" Width="1.5" PointX="3" PointY="11.5" IsExpanded="true" />

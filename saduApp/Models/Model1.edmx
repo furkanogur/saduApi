@@ -100,6 +100,7 @@
           <Property Name="Aktiflik" Type="bit" Nullable="false" />
           <Property Name="Fiyat" Type="money" Nullable="false" />
           <Property Name="UyeId" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="UrunFoto" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="Uye">
           <Key>
@@ -109,7 +110,8 @@
           <Property Name="KullaniciAdi" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Sifre" Type="nvarchar" MaxLength="250" Nullable="false" />
           <Property Name="admin" Type="bit" Nullable="false" />
-          <Property Name="Email" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="UyeFoto" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <Association Name="FK_İletisim_Uye">
           <End Role="Uye" Type="Self.Uye" Multiplicity="1" />
@@ -398,6 +400,7 @@
           <Property Name="Aktiflik" Type="Boolean" Nullable="false" />
           <Property Name="Fiyat" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
           <Property Name="UyeId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="UrunFoto" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="KategoriUrun" Relationship="Self.FK_KategoriUrun_Urunler" FromRole="Urunler" ToRole="KategoriUrun" />
           <NavigationProperty Name="Siparisler" Relationship="Self.FK_Siparisler_Urunler" FromRole="Urunler" ToRole="Siparisler" />
           <NavigationProperty Name="Uye" Relationship="Self.FK_Urunler_Uye" FromRole="Urunler" ToRole="Uye" />
@@ -410,7 +413,8 @@
           <Property Name="KullaniciAdi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Sifre" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="admin" Type="Boolean" Nullable="false" />
-          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="UyeFoto" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Iletisim" Relationship="Self.FK_İletisim_Uye" FromRole="Uye" ToRole="Iletisim" />
           <NavigationProperty Name="Siparisler" Relationship="Self.FK_Siparisler_Uye" FromRole="Uye" ToRole="Siparisler" />
           <NavigationProperty Name="Urunler" Relationship="Self.FK_Urunler_Uye" FromRole="Uye" ToRole="Urunler" />
@@ -535,7 +539,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="SaduDbEntities2" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="SaduDbEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Iletisim" EntityType="Self.Iletisim" />
           <EntitySet Name="Kargo" EntityType="Self.Kargo" />
           <EntitySet Name="Kategoriler" EntityType="Self.Kategoriler" />
@@ -593,7 +597,7 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="SaduDbModelStoreContainer" CdmEntityContainer="SaduDbEntities2">
+        <EntityContainerMapping StorageEntityContainer="SaduDbModelStoreContainer" CdmEntityContainer="SaduDbEntities">
           <EntitySetMapping Name="Iletisim">
             <EntityTypeMapping TypeName="SaduDbModel.Iletisim">
               <MappingFragment StoreEntitySet="Iletisim">
@@ -697,6 +701,7 @@
                 <ScalarProperty Name="Aktiflik" ColumnName="Aktiflik" />
                 <ScalarProperty Name="Fiyat" ColumnName="Fiyat" />
                 <ScalarProperty Name="UyeId" ColumnName="UyeId" />
+                <ScalarProperty Name="UrunFoto" ColumnName="UrunFoto" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -708,6 +713,7 @@
                 <ScalarProperty Name="Sifre" ColumnName="Sifre" />
                 <ScalarProperty Name="admin" ColumnName="admin" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="UyeFoto" ColumnName="UyeFoto" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

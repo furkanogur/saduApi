@@ -13,10 +13,10 @@ namespace saduApp.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class SaduDbEntities2 : DbContext
+    public partial class SaduDbEntities : DbContext
     {
-        public SaduDbEntities2()
-            : base("name=SaduDbEntities2")
+        public SaduDbEntities()
+            : base("name=SaduDbEntities")
         {
         }
     

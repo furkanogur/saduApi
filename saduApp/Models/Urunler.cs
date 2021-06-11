@@ -27,6 +27,7 @@ namespace saduApp.Models
         public bool Aktiflik { get; set; }
         public decimal Fiyat { get; set; }
         public string UyeId { get; set; }
+        public string UrunFoto { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<KategoriUrun> KategoriUrun { get; set; }
