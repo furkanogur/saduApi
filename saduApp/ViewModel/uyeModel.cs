@@ -12,7 +12,7 @@ namespace saduApp.ViewModel
         public string Sifre { get; set; }
         public bool admin { get; set; }
         public string Email { get; set; }
-        public int UyeUrunSayisi { get; set; }
+        public string UyeUrunId { get; set; }
         public string UyeFoto { get; set; }
     }
 }
