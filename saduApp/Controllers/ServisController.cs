@@ -106,6 +106,7 @@ namespace saduApp.Controllers
                 return sonuc;
             }
 
+
             kayit.KullaniciAdi = model.KullaniciAdi;
             kayit.Sifre = model.Sifre;
             kayit.admin = model.admin;
