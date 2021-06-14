@@ -70,6 +70,7 @@
           <Property Name="KargoId" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="KargoUcreti" Type="money" />
           <Property Name="SiparisDurumuId" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="TedarikUyeId" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -221,6 +222,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Siparisler_Uye1">
+          <End Role="Uye" Type="Self.Uye" Multiplicity="0..1" />
+          <End Role="Siparisler" Type="Self.Siparisler" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Uye">
+              <PropertyRef Name="uyeId" />
+            </Principal>
+            <Dependent Role="Siparisler">
+              <PropertyRef Name="TedarikUyeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Urunler_Uye">
           <End Role="Uye" Type="Self.Uye" Multiplicity="1" />
           <End Role="Urunler" Type="Self.Urunler" Multiplicity="*" />
@@ -278,6 +291,10 @@
             <End Role="Siparisler" EntitySet="Siparisler" />
           </AssociationSet>
           <AssociationSet Name="FK_Siparisler_Uye" Association="Self.FK_Siparisler_Uye">
+            <End Role="Uye" EntitySet="Uye" />
+            <End Role="Siparisler" EntitySet="Siparisler" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Siparisler_Uye1" Association="Self.FK_Siparisler_Uye1">
             <End Role="Uye" EntitySet="Uye" />
             <End Role="Siparisler" EntitySet="Siparisler" />
           </AssociationSet>
@@ -365,11 +382,13 @@
           <Property Name="KargoId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="KargoUcreti" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="SiparisDurumuId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="TedarikUyeId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Kargo" Relationship="Self.FK_Siparisler_Kargo" FromRole="Siparisler" ToRole="Kargo" />
           <NavigationProperty Name="OdemeTuru" Relationship="Self.FK_Siparisler_OdemeTuru" FromRole="Siparisler" ToRole="OdemeTuru" />
           <NavigationProperty Name="SiparisDurumu" Relationship="Self.FK_Siparisler_SiparisDurumu" FromRole="Siparisler" ToRole="SiparisDurumu" />
           <NavigationProperty Name="Urunler" Relationship="Self.FK_Siparisler_Urunler" FromRole="Siparisler" ToRole="Urunler" />
           <NavigationProperty Name="Uye" Relationship="Self.FK_Siparisler_Uye" FromRole="Siparisler" ToRole="Uye" />
+          <NavigationProperty Name="Uye1" Relationship="Self.FK_Siparisler_Uye1" FromRole="Siparisler" ToRole="Uye" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -417,6 +436,7 @@
           <Property Name="UyeFoto" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Iletisim" Relationship="Self.FK_İletisim_Uye" FromRole="Uye" ToRole="Iletisim" />
           <NavigationProperty Name="Siparisler" Relationship="Self.FK_Siparisler_Uye" FromRole="Uye" ToRole="Siparisler" />
+          <NavigationProperty Name="Siparisler1" Relationship="Self.FK_Siparisler_Uye1" FromRole="Uye" ToRole="Siparisler" />
           <NavigationProperty Name="Urunler" Relationship="Self.FK_Urunler_Uye" FromRole="Uye" ToRole="Urunler" />
         </EntityType>
         <Association Name="FK_İletisim_Uye">
@@ -527,6 +547,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Siparisler_Uye1">
+          <End Role="Uye" Type="Self.Uye" Multiplicity="0..1" />
+          <End Role="Siparisler" Type="Self.Siparisler" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Uye">
+              <PropertyRef Name="uyeId" />
+            </Principal>
+            <Dependent Role="Siparisler">
+              <PropertyRef Name="TedarikUyeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Urunler_Uye">
           <End Role="Uye" Type="Self.Uye" Multiplicity="1" />
           <End Role="Urunler" Type="Self.Urunler" Multiplicity="*" />
@@ -584,6 +616,10 @@
             <End Role="Siparisler" EntitySet="Siparisler" />
           </AssociationSet>
           <AssociationSet Name="FK_Siparisler_Uye" Association="Self.FK_Siparisler_Uye">
+            <End Role="Uye" EntitySet="Uye" />
+            <End Role="Siparisler" EntitySet="Siparisler" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Siparisler_Uye1" Association="Self.FK_Siparisler_Uye1">
             <End Role="Uye" EntitySet="Uye" />
             <End Role="Siparisler" EntitySet="Siparisler" />
           </AssociationSet>
@@ -668,6 +704,7 @@
                 <ScalarProperty Name="KargoId" ColumnName="KargoId" />
                 <ScalarProperty Name="KargoUcreti" ColumnName="KargoUcreti" />
                 <ScalarProperty Name="SiparisDurumuId" ColumnName="SiparisDurumuId" />
+                <ScalarProperty Name="TedarikUyeId" ColumnName="TedarikUyeId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

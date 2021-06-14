@@ -4,18 +4,18 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="558ac2ac97f640d68688418346235199" Name="Diagram1">
-        <EntityTypeShape EntityType="SaduDbModel.Iletisim" Width="1.5" PointX="3" PointY="3.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="SaduDbModel.Kargo" Width="1.5" PointX="3" PointY="7.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="SaduDbModel.Kategoriler" Width="1.5" PointX="3" PointY="20.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="SaduDbModel.KategoriUrun" Width="1.5" PointX="5.25" PointY="12.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="SaduDbModel.OdemeTuru" Width="1.5" PointX="3" PointY="15.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="SaduDbModel.SiparisDurumu" Width="1.5" PointX="3" PointY="17.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="SaduDbModel.Siparisler" Width="1.5" PointX="5.25" PointY="7.875" IsExpanded="true" />
+      <Diagram DiagramId="a88e474c6798499f91f53ffcc140cc19" Name="Diagram1">
+        <EntityTypeShape EntityType="SaduDbModel.Iletisim" Width="1.5" PointX="3" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="SaduDbModel.Kargo" Width="1.5" PointX="3" PointY="8" IsExpanded="true" />
+        <EntityTypeShape EntityType="SaduDbModel.Kategoriler" Width="1.5" PointX="3" PointY="21.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="SaduDbModel.KategoriUrun" Width="1.5" PointX="5.25" PointY="13.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="SaduDbModel.OdemeTuru" Width="1.5" PointX="3" PointY="16.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="SaduDbModel.SiparisDurumu" Width="1.5" PointX="3" PointY="18.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="SaduDbModel.Siparisler" Width="1.5" PointX="5.25" PointY="8.125" IsExpanded="true" />
         <EntityTypeShape EntityType="SaduDbModel.sysdiagrams" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="SaduDbModel.TedarikciUrunler" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="SaduDbModel.Urunler" Width="1.5" PointX="3" PointY="11.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="SaduDbModel.Uye" Width="1.5" PointX="0.75" PointY="5.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="SaduDbModel.Urunler" Width="1.5" PointX="3" PointY="12" IsExpanded="true" />
+        <EntityTypeShape EntityType="SaduDbModel.Uye" Width="1.5" PointX="0.75" PointY="5.5" IsExpanded="true" />
         <AssociationConnector Association="SaduDbModel.FK_İletisim_Uye" ManuallyRouted="false" />
         <AssociationConnector Association="SaduDbModel.FK_Siparisler_Kargo" ManuallyRouted="false" />
         <AssociationConnector Association="SaduDbModel.FK_Kategoriler_Kategoriler" ManuallyRouted="false" />
@@ -25,6 +25,7 @@
         <AssociationConnector Association="SaduDbModel.FK_Siparisler_SiparisDurumu" ManuallyRouted="false" />
         <AssociationConnector Association="SaduDbModel.FK_Siparisler_Urunler" ManuallyRouted="false" />
         <AssociationConnector Association="SaduDbModel.FK_Siparisler_Uye" ManuallyRouted="false" />
+        <AssociationConnector Association="SaduDbModel.FK_Siparisler_Uye1" ManuallyRouted="false" />
         <AssociationConnector Association="SaduDbModel.FK_Urunler_Uye" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>

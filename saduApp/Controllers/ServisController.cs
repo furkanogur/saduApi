@@ -562,8 +562,15 @@ namespace saduApp.Controllers
                 sonuc.islem = false;
                 sonuc.mesaj = "Ürünü Tedarikten Ve Kategorideki Ürünlerden Sil";
                 return sonuc;
-
             }
+
+            if (db.Siparisler.Count(s => s.UrunId == urunId) > 0)
+            {
+                sonuc.islem = false;
+                sonuc.mesaj = "Ürünü Tedarikten Ve Kategorideki Ürünlerden Sil";
+                return sonuc;
+            }
+
 
             db.Urunler.Remove(kayit);
             db.SaveChanges();
@@ -946,6 +953,77 @@ namespace saduApp.Controllers
             return kayit;
         }
 
+        //SiparisUyeById
+        //sipariş veren
+        [HttpGet]
+        [Route("api/siparisuyebyid/{uyeId}")]
+
+        public List<siparislerModel> SiparisUyeById(string uyeId)
+        {
+            List <siparislerModel> liste = db.Siparisler.Where(s => s.UyeId == uyeId).Select(x => new siparislerModel()
+            {
+                siparisId = x.siparisId,
+                UyeId = x.UyeId,
+                UrunId = x.UrunId,
+                Fiyat = x.Fiyat,
+                Adres = x.Adres,
+                SiparisTarihi = x.SiparisTarihi,
+                SiparisDurumuId = x.SiparisDurumuId,
+                KargoId = x.KargoId,
+                KargoUcreti = x.KargoUcreti,
+                OdemeId = x.OdemeId,
+                TedarikUyeId = x.TedarikUyeId,
+
+            }).ToList();
+
+            foreach (var kayit in liste)
+            {
+                kayit.SiparisUye = UyeById(kayit.UyeId);
+                kayit.SiparisUrun = UrunById(kayit.UrunId);
+                kayit.SiparisKargo = KargoById(kayit.KargoId);
+                kayit.SiparisDurum = SiparisDurumById(kayit.SiparisDurumuId);
+                kayit.SiparisOdeme = OdemeById(kayit.OdemeId);
+            }
+
+            return liste;
+        }
+
+
+        //SiparisUyeById
+        //sipariş alan
+        [HttpGet]
+        [Route("api/siparisalanbyid/{uyeId}")]
+
+        public List<siparislerModel> SiparisalanUById(string uyeId)
+        {
+            List<siparislerModel> liste = db.Siparisler.Where(s => s.TedarikUyeId == uyeId).Select(x => new siparislerModel()
+            {
+                siparisId = x.siparisId,
+                UyeId = x.UyeId,
+                UrunId = x.UrunId,
+                Fiyat = x.Fiyat,
+                Adres = x.Adres,
+                SiparisTarihi = x.SiparisTarihi,
+                SiparisDurumuId = x.SiparisDurumuId,
+                KargoId = x.KargoId,
+                KargoUcreti = x.KargoUcreti,
+                OdemeId = x.OdemeId,
+                TedarikUyeId = x.TedarikUyeId,
+
+            }).ToList();
+
+            foreach (var kayit in liste)
+            {
+                kayit.SiparisUye = UyeById(kayit.UyeId);
+                kayit.SiparisUrun = UrunById(kayit.UrunId);
+                kayit.SiparisKargo = KargoById(kayit.KargoId);
+                kayit.SiparisDurum = SiparisDurumById(kayit.SiparisDurumuId);
+                kayit.SiparisOdeme = OdemeById(kayit.OdemeId);
+            }
+
+            return liste;
+        }
+
         //Siparisler Ekle
 
         [HttpPost]
@@ -964,6 +1042,7 @@ namespace saduApp.Controllers
             yeni.KargoId = model.KargoId;
             yeni.KargoUcreti = model.KargoUcreti;
             yeni.OdemeId = model.OdemeId;
+            yeni.TedarikUyeId = model.TedarikUyeId;
             db.Siparisler.Add(yeni);
             db.SaveChanges();
             sonuc.islem = true;
@@ -994,6 +1073,7 @@ namespace saduApp.Controllers
             kayit.KargoId = model.KargoId;
             kayit.KargoUcreti = model.KargoUcreti;
             kayit.SiparisDurumuId = model.SiparisDurumuId;
+            kayit.TedarikUyeId = model.TedarikUyeId;
 
             db.SaveChanges();
             sonuc.islem = true;

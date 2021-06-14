@@ -19,6 +19,7 @@ namespace saduApp.Models
         {
             this.Iletisim = new HashSet<Iletisim>();
             this.Siparisler = new HashSet<Siparisler>();
+            this.Siparisler1 = new HashSet<Siparisler>();
             this.Urunler = new HashSet<Urunler>();
         }
     
@@ -33,6 +34,8 @@ namespace saduApp.Models
         public virtual ICollection<Iletisim> Iletisim { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Siparisler> Siparisler { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Siparisler> Siparisler1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Urunler> Urunler { get; set; }
     }

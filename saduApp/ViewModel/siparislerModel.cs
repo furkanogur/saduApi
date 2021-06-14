@@ -16,6 +16,7 @@ namespace saduApp.ViewModel
         public decimal Fiyat { get; set; }
         public string OdemeId { get; set; }
         public string KargoId { get; set; }
+        public string TedarikUyeId { get; set; }
         public Nullable<decimal> KargoUcreti { get; set; }
         public string SiparisDurumuId { get; set; }
         public uyeModel SiparisUye { get; set; }

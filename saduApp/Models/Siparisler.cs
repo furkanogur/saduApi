@@ -24,11 +24,13 @@ namespace saduApp.Models
         public string KargoId { get; set; }
         public Nullable<decimal> KargoUcreti { get; set; }
         public string SiparisDurumuId { get; set; }
+        public string TedarikUyeId { get; set; }
     
         public virtual Kargo Kargo { get; set; }
         public virtual OdemeTuru OdemeTuru { get; set; }
         public virtual SiparisDurumu SiparisDurumu { get; set; }
         public virtual Urunler Urunler { get; set; }
         public virtual Uye Uye { get; set; }
+        public virtual Uye Uye1 { get; set; }
     }
 }
