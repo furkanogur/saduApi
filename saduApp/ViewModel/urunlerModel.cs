@@ -15,5 +15,9 @@ namespace saduApp.ViewModel
         public string UyeId { get; set; }
         public int UrunUyeSayisi { get; set; }
         public string UrunFoto { get; set; }
+        public uyeModel UyeBilgi { get; set; }
+        public iletisimModel UyeIletisim { get; set; }
+
+
     }
 }

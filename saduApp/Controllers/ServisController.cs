@@ -486,6 +486,7 @@ namespace saduApp.Controllers
                 UrunFoto = x.UrunFoto,
             }).SingleOrDefault();
 
+
             return kayit;
         }
 
@@ -913,6 +914,7 @@ namespace saduApp.Controllers
                 KargoId = x.KargoId,
                 KargoUcreti = x.KargoUcreti,
                 OdemeId = x.OdemeId,
+                TedarikUyeId =x.TedarikUyeId,
                 
             }).ToList();
 
@@ -947,6 +949,7 @@ namespace saduApp.Controllers
                 KargoId = x.KargoId,
                 KargoUcreti = x.KargoUcreti,
                 OdemeId = x.OdemeId,
+                TedarikUyeId = x.TedarikUyeId,
 
             }).SingleOrDefault();
 
@@ -956,9 +959,9 @@ namespace saduApp.Controllers
         //SiparisUyeById
         //sipariş veren
         [HttpGet]
-        [Route("api/siparisuyebyid/{uyeId}")]
+        [Route("api/siparisverenbyid/{uyeId}")]
 
-        public List<siparislerModel> SiparisUyeById(string uyeId)
+        public List<siparislerModel> SiparisVerenById(string uyeId)
         {
             List <siparislerModel> liste = db.Siparisler.Where(s => s.UyeId == uyeId).Select(x => new siparislerModel()
             {
@@ -1046,7 +1049,7 @@ namespace saduApp.Controllers
             db.Siparisler.Add(yeni);
             db.SaveChanges();
             sonuc.islem = true;
-            sonuc.mesaj = "Siparis Eklendi";
+            sonuc.mesaj = "Siparişiniz Alınmıştır..";
 
             return sonuc;
         }
@@ -1058,7 +1061,7 @@ namespace saduApp.Controllers
 
         public sonucModel SiparisDuzenle(siparislerModel model)
         {
-            Siparisler kayit = db.Siparisler.Where(s => s.siparisId == model.SiparisDurumuId).SingleOrDefault();
+            Siparisler kayit = db.Siparisler.Where(s => s.siparisId == model.siparisId).SingleOrDefault();
 
             if (kayit == null)
             {
@@ -1187,7 +1190,7 @@ namespace saduApp.Controllers
         //SiparisDurum Sil
 
         [HttpDelete]
-        [Route("api/siparisdurumusil/{siparisDId}")]
+        [Route("api/siparisdurumusil/{siparisId}")]
         public sonucModel SiparisDurumuSil(string siparisDId)
         {
 
@@ -1267,7 +1270,7 @@ namespace saduApp.Controllers
         //Kargo Duzenle
 
         [HttpPut]
-        [Route("api/siparisdurumuduzenle")]
+        [Route("api/kargoduzenle")]
 
         public sonucModel KargoDuzenle(kargoModel model)
         {
