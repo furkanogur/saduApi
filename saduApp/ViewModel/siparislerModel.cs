@@ -18,6 +18,13 @@ namespace saduApp.ViewModel
         public string KargoId { get; set; }
         public Nullable<decimal> KargoUcreti { get; set; }
         public string SiparisDurumuId { get; set; }
+        public uyeModel SiparisUye { get; set; }
+        public urunlerModel SiparisUrun { get; set; }
+        public kargoModel SiparisKargo { get; set; }
+        public odemeTuruModel SiparisOdeme { get; set; }
+        public siparisDurumuModel SiparisDurum { get; set; }
+
+
 
     }
 }

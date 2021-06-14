@@ -9,5 +9,6 @@ namespace saduApp.ViewModel
     {
         public bool islem { get; set; }
         public string mesaj { get; set; }
+        public string id { get; set; }
     }
 }

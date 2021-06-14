@@ -511,6 +511,7 @@ namespace saduApp.Controllers
             db.SaveChanges();
             sonuc.islem = true;
             sonuc.mesaj = "Ürun Eklendi";
+            sonuc.id = yeni.urunId;
             return sonuc;
         }
 
@@ -548,7 +549,7 @@ namespace saduApp.Controllers
         [Route("api/urunsil/{urunId}")]
         public sonucModel UrunSil(string urunId)
         {
-            Urunler kayit = db.Urunler.Where(s => s.urunId == urunId).SingleOrDefault();
+            Urunler kayit = db.Urunler.Where(s => s.urunId == urunId).FirstOrDefault();
 
             if (kayit == null)
             {
@@ -631,8 +632,9 @@ namespace saduApp.Controllers
                 KatAdi = x.KatAdi,
                 Aktiflik = x.Aktiflik,
                 ustKategoriId = x.ustKategoriId,
-               
-            }).ToList();
+   
+
+        }).ToList();
 
             foreach (var kayit in liste)
             {
@@ -807,6 +809,14 @@ namespace saduApp.Controllers
                 return sonuc;
             }
 
+            if (model.KategoriId ==null)
+            {
+                sonuc.islem = false;
+                sonuc.mesaj = "Kategori Seçmediniz!";
+                return sonuc;
+            }
+
+
             KategoriUrun yeni = new KategoriUrun();
             yeni.kategoriUrunId = Guid.NewGuid().ToString();
             yeni.UrunId = model.UrunId;
@@ -817,6 +827,7 @@ namespace saduApp.Controllers
             db.SaveChanges();
             sonuc.islem = true;
             sonuc.mesaj = "Ürün kategoriye Eklendi";
+            
 
             return sonuc;
         }
@@ -849,21 +860,25 @@ namespace saduApp.Controllers
         //KategoriUrurn Sil
 
         [HttpDelete]
-        [Route("api/kategoriurunsil/{katUrunId}")]
-        public sonucModel KategoriUrunSil(string katUrunId)
+        [Route("api/kategoriurunsil/{urunid}")]
+        public sonucModel KategoriUrunSil(string urunid)
         {
 
-            KategoriUrun kayit = db.KategoriUrun.Where(s => s.kategoriUrunId == katUrunId).SingleOrDefault();
-
-            if (kayit == null)
+            for (int i = 0; urunid.Count() > 0 ; i++)                      
             {
-                sonuc.islem = false;
-                sonuc.mesaj = "Kayıt Bulunamadı";
-                return sonuc;
-            }
+                KategoriUrun kayit = db.KategoriUrun.Where(s => s.UrunId == urunid).FirstOrDefault();
 
-            db.KategoriUrun.Remove(kayit);
-            db.SaveChanges();
+                if (kayit == null)
+                {
+                    sonuc.islem = false;
+                    sonuc.mesaj = "Kayıt Bulunamadı";
+                    return sonuc;
+                }
+
+                db.KategoriUrun.Remove(kayit);
+                db.SaveChanges();
+            }
+            
             sonuc.mesaj = "Kategori Ürünü Silindi";
             sonuc.islem = true;
             return sonuc;
@@ -893,6 +908,15 @@ namespace saduApp.Controllers
                 OdemeId = x.OdemeId,
                 
             }).ToList();
+
+            foreach (var kayit in liste)
+            {
+                kayit.SiparisUye = UyeById(kayit.UyeId);
+                kayit.SiparisUrun = UrunById(kayit.UrunId);
+                kayit.SiparisKargo = KargoById(kayit.KargoId);
+                kayit.SiparisDurum = SiparisDurumById(kayit.SiparisDurumuId);
+                kayit.SiparisOdeme = OdemeById(kayit.OdemeId);
+            }
 
             return liste;
         }
@@ -1022,6 +1046,21 @@ namespace saduApp.Controllers
             return liste;
         }
 
+        //SiparisDurum byid
+
+        [HttpGet]
+        [Route("api/siparisdurumbyid/{siparisdurumId}")]
+        public siparisDurumuModel SiparisDurumById(string siparisdurumId)
+        {
+            siparisDurumuModel kayit = db.SiparisDurumu.Where(s => s.siparisDurumId == siparisdurumId).Select(x => new siparisDurumuModel()
+            {
+                siparisDurumId = x.siparisDurumId,
+                SiparisDurumu1 = x.SiparisDurumu1
+
+            }).SingleOrDefault();
+            return kayit;
+        }
+
         //SiparisDurum Ekle
 
         [HttpPost]
@@ -1110,6 +1149,22 @@ namespace saduApp.Controllers
             return liste;
         }
 
+        //Kargo byid
+
+        [HttpGet]
+        [Route("api/kargobyid/{kargoId}")]
+        public kargoModel KargoById(string kargoId)
+        {
+            kargoModel kayit = db.Kargo.Where(s => s.kargoId == kargoId).Select(x => new kargoModel()
+            {
+                kargoId = x.kargoId,
+                FirmaAdi = x.FirmaAdi,
+                Telefon = x.Telefon
+
+            }).SingleOrDefault();
+            return kayit;
+        }
+       
         //Kargo Ekle
 
         [HttpPost]
@@ -1197,6 +1252,21 @@ namespace saduApp.Controllers
 
             }).ToList();
             return liste;
+        }
+
+        //Odeme byid
+
+        [HttpGet]
+        [Route("api/odemebyid/{odemeId}")]
+        public odemeTuruModel OdemeById(string odemeId)
+        {
+            odemeTuruModel kayit = db.OdemeTuru.Where(s => s.odemeTuruId == odemeId).Select(x => new odemeTuruModel()
+            {
+                odemeTuruId = x.odemeTuruId,
+                OdemeCesiti = x.OdemeCesiti
+
+            }).SingleOrDefault();
+            return kayit;
         }
 
         //OdemeTuru Ekle
